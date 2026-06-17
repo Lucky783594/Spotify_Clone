@@ -1,6 +1,6 @@
 require('node:dns').setServers(['8.8.8.8', '8.8.4.4']);
-
 require("dotenv").config();
+
 const express = require("express");
 const cors = require("cors");
 const connectDB = require("./config/db");
@@ -19,6 +19,7 @@ app.use(
     credentials: true,
   })
 );
+
 app.use(express.json());
 
 app.use("/api/auth", authRoutes);
@@ -39,9 +40,9 @@ app.use((err, req, res, next) => {
 });
 
 const PORT = process.env.PORT || 5000;
-
-if (require.main === module) {
+if (process.env.NODE_ENV !== "production") {
   app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
 }
+
 
 module.exports = app;
